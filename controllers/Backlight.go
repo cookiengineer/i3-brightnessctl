@@ -7,9 +7,9 @@ import "strings"
 
 type Backlight struct {
 	Name    string `json:"name"`
-	Current uint8  `json:"current"`
-	Min     uint8  `json:"min"`
-	Max     uint8  `json:"max"`
+	Current uint16  `json:"current"`
+	Min     uint16  `json:"min"`
+	Max     uint16  `json:"max"`
 }
 
 func NewBacklight(name string) Backlight {
@@ -31,12 +31,11 @@ func (backlight *Backlight) Decrease() bool {
 
 	backlight.ReadState()
 
-	delta := uint8(backlight.Max / 100)
-	current := uint8(backlight.Current / delta)
-
+	delta := uint16(backlight.Max / 100)
+	current := uint16(backlight.Current / delta)
 	next := curves.DecreaseEaseOut(current)
 
-	backlight.Current = uint8(next * delta)
+	backlight.Current = uint16(next * delta)
 
 	return backlight.WriteState()
 
@@ -46,12 +45,11 @@ func (backlight *Backlight) Increase() bool {
 
 	backlight.ReadState()
 
-	delta := uint8(backlight.Max / 100)
-	current := uint8(backlight.Current / delta)
-
+	delta := uint16(backlight.Max / 100)
+	current := uint16(backlight.Current / delta)
 	next := curves.IncreaseEaseIn(current)
 
-	backlight.Current = uint8(next * delta)
+	backlight.Current = uint16(next * delta)
 
 	return backlight.WriteState()
 
@@ -61,8 +59,12 @@ func (backlight *Backlight) Status() string {
 
 	backlight.ReadState()
 
-	delta := uint8(backlight.Max / 100)
-	current := uint8(backlight.Current / delta)
+	delta := uint16(backlight.Max / 100)
+	current := uint16(backlight.Current / delta)
+
+	if current > 100 {
+		current = 100
+	}
 
 	return strconv.FormatUint(uint64(current), 10)
 
@@ -79,13 +81,13 @@ func (backlight *Backlight) ReadState() bool {
 
 	if err1 == nil && err2 == nil {
 
-		num1, err11 := strconv.ParseUint(strings.TrimSpace(string(buf1)), 10, 8)
-		num2, err21 := strconv.ParseUint(strings.TrimSpace(string(buf2)), 10, 8)
+		num1, err11 := strconv.ParseUint(strings.TrimSpace(string(buf1)), 10, 16)
+		num2, err21 := strconv.ParseUint(strings.TrimSpace(string(buf2)), 10, 16)
 
 		if err11 == nil && err21 == nil {
 
-			backlight.Current = uint8(num1)
-			backlight.Max = uint8(num2)
+			backlight.Current = uint16(num1)
+			backlight.Max = uint16(num2)
 			result = true
 
 		}
