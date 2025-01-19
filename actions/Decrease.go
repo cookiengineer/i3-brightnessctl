@@ -17,9 +17,9 @@ func Decrease(name string, typ controllers.Type) bool {
 			percentage := controller.Status()
 
 			if percentage != "" {
-				fmt.Println("Decreased brightness to " + percentage + "%")
+				fmt.Println(name + ": Decreased brightness to " + percentage + "%")
 			} else {
-				fmt.Println("Decreased brightness to ???%")
+				fmt.Println(name + ": Decreased brightness to ???%")
 			}
 
 		}
@@ -34,9 +34,9 @@ func Decrease(name string, typ controllers.Type) bool {
 			percentage := controller.Status()
 
 			if percentage != "" {
-				fmt.Println("Decreased brightness to " + percentage + "%")
+				fmt.Println(name + ": Decreased brightness to " + percentage + "%")
 			} else {
-				fmt.Println("Decreased brightness to ???%")
+				fmt.Println(name + ": Decreased brightness to ???%")
 			}
 
 		}

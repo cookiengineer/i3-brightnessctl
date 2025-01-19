@@ -17,9 +17,9 @@ func Increase(name string, typ controllers.Type) bool {
 			percentage := controller.Status()
 
 			if percentage != "" {
-				fmt.Println("Increased brightness to " + percentage + "%")
+				fmt.Println(name + ": Increased brightness to " + percentage + "%")
 			} else {
-				fmt.Println("Increased brightness to ???%")
+				fmt.Println(name + ": Increased brightness to ???%")
 			}
 
 		}
@@ -34,9 +34,9 @@ func Increase(name string, typ controllers.Type) bool {
 			percentage := controller.Status()
 
 			if percentage != "" {
-				fmt.Println("Increased brightness to " + percentage + "%")
+				fmt.Println(name + ": Increased brightness to " + percentage + "%")
 			} else {
-				fmt.Println("Increased brightness to ???%")
+				fmt.Println(name + ": Increased brightness to ???%")
 			}
 
 		}
